@@ -27,6 +27,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <h3>Upload lên google drive ở đây</h3>
                 <form action="/upload" method='post' enctype='multipart/form-data'>
                 <br> <br> <br>
                 @csrf

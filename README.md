@@ -59,7 +59,11 @@ REQUEST:
      
 
 ###  API Collections:  
+  1. Show List API Collection
+  `/api/ShowCollectionList`: GET method 
+  2. Show API Collection
   `/api/ShowCollection/{slug1}/{slug2?}/{slug3?}?REQUEST`: GET method 
+REQUEST:  
 ```php
       `sort = value`  //with value=['A-to-Z','Z-to-A'] or undentify 
       `movienumber = Interger` //if undentify movienumber = 20 
@@ -112,4 +116,14 @@ Parameters in `request`
 ###  API Review:
 1. showReviews: \
     `/api/comment/showReviews/{IdMovie}` : GET method 
+2. createReview: \
+    `/api/comment/createReview` : POST method
+```php
+         'IdMovie'      => 'required|numeric',
+          'IdUser'      => 'required|numeric',
+          'Rating'      => 'required|numeric|min:0|max:10',
+          'Review'      => 'required|string',
+          'titleReview' => 'sometimes|string',
+          'dateCreate'  => 'required|date'
+```  
 

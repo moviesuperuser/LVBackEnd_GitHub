@@ -9,6 +9,7 @@ use App\Models\Movie;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -38,7 +39,7 @@ class ReviewController extends Controller
           ->join('users', 'users.id', 'Watches.IdUser')
           ->where('Watches.IdMovie', $IdMovie)
           ->where('Watches.Review', '!=', null)
-          ->select('users.name', 'Watches.Review')
+          ->select('users.id','users.name', 'Watches.Rating','Watches.Review','Watches.created_at','Watches.updated_at','Watches.titleReview')
           ->get());
         $review_json = array('Reviews' => $review[0]);
       } else {
@@ -47,7 +48,34 @@ class ReviewController extends Controller
       $result = $this->createJsonResult($review_json);
       return $result;
   }
-  public function addReview(Request $request){
+  public function createReview(Request $request){
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'IdMovie'     => 'required|numeric',
+        'IdUser'     => 'required|numeric',
+        'Rating'    => 'required|numeric|min:0|max:10',
+        'Review' => 'required|string',
+        'titleReview' => 'sometimes|string',
+        'dateCreate' => 'required|date'
 
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $createReview = DB::table('Watches')
+    ->insert([
+        'IdMovie' => $request['IdMovie'],
+        'IdUser' => $request['IdUser'],
+        'Rating' => $request['Rating'],
+        'Review' => $request['Review'],
+        'titleReview' =>  $request['titleReview'],
+        'created_at' =>  $request['dateCreate'],
+        'updated_at' =>  $request['dateCreate'],
+      ]);
   }
 }

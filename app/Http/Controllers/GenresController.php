@@ -94,7 +94,7 @@ class GenresController extends Controller
         $sort = 'Default';
       }
       $response = $this->genres_sort($this->slug, $sort, $current_page, $show_product);
-      return $this->createJsonResult($result);
+      return $this->createJsonResult($response);
     }
   }
 }

@@ -57,6 +57,8 @@ Route::group(
     'prefix'     => 'review',
   ],
   function ($router) {
+    Route::post('createReview', 'ReviewController@createReview');
+  
     Route::get('showReviews/{IdMovie}', 'ReviewController@showReviews');
   }
 );
@@ -72,6 +74,9 @@ $router->group(['middleware' => 'api',
   ]);
   $router->get('ShowCollection/{slug1}/{slug2?}/{slug3?}', [
     'uses' => 'CollectionController@ShowCollection'
+  ]);
+  $router->get('ShowCollectionList', [
+    'uses' => 'CollectionController@ShowCollectionList'
   ]);
   $router->get('Test', [
     'uses' => 'CollectionController@Test'

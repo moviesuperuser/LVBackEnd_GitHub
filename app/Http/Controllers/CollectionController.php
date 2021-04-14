@@ -12,6 +12,20 @@ use App\Search\MultiMovies;
 
 class CollectionController extends Controller
 {
+
+  private function createJsonResult($response)
+  {
+    $result = response()->json($response, 200);
+    return $result
+      ->header('Access-Control-Allow-Origin', '*')
+      ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  }
+  public function ShowCollectionList(){
+    $movie = DB::table('Collections')
+    ->select('*')
+    ->get();
+    return $this->createJsonResult($movie);
+  }
   public function Test(){
     // $query = 'crime'; // <--  Change the query for testing.
     // $articles = MultiMovies::search($query)->get();

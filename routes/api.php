@@ -83,7 +83,6 @@ $router->group(['middleware' => 'api',
   ]);
 });
 Route::get('/', function () {
-    
   // $files = Storage::disk("google")->allFiles();
   // $firstFileName= $files[0];
   // $link = 'https://drive.google.com/uc?export=view&id='.$firstFileName;

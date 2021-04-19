@@ -67,7 +67,13 @@ class ReviewController extends Controller
         422
       );
     }
-    $createReview = DB::table('Watches')
+    $chechReview = DB::table('Watches')
+    ->select('*')
+    ->where('IdMovie',$request['IdMovie'])
+    ->where('IdUser',$request['IdUser'])
+    ->get();
+    if(count($chechReview)==0){
+      $createReview = DB::table('Watches')
     ->insert([
         'IdMovie' => $request['IdMovie'],
         'IdUser' => $request['IdUser'],
@@ -77,5 +83,11 @@ class ReviewController extends Controller
         'created_at' =>  $request['dateCreate'],
         'updated_at' =>  $request['dateCreate'],
       ]);
+      return "Successful";
+    }
+    else{
+      return "Review is exist.";
+    }
+    
   }
 }

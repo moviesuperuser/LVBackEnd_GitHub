@@ -204,39 +204,39 @@ class CommentsController extends Controller
       200
     );
   }
-  // public function addComment(Request $request)
-  // {
-  //   $validator = Validator::make(
-  //     $request->all(),
-  //     [
-  //       'IdMovie' => 'required|numeric',
-  //       'IdUser' => 'required|numeric',
-  //       'Body' => 'required|string',
-  //       'dateCreate' =>  'required|date'
-  //     ]
-  //   );
-  //   if ($validator->fails()) {
-  //     return response()->json(
-  //       [$validator->errors()],
-  //       422
-  //     );
-  //   }
-  //   try {
-  //     $addComment = DB::table('Comments')
-  //       ->insert([
-  //         'IdMovie' => $request['IdMovie'],
-  //         'IdUser' => $request['IdUser'],
-  //         'UserName' => $request['UserName'],
-  //         'Body' => $request['Body'],
-  //         'created_at' =>  $request['dateCreate'],
-  //         'updated_at' =>  $request['dateCreate'],
-  //       ]);
-  //   } catch (ModelNotFoundException $exception) {
-  //     return back()->withError($exception->getMessage())->withInput();
-  //   }
-  //   return response()->json(
-  //     ["CREATED"],
-  //     200
-  //   );
-  // }
+  public function addComment(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'IdMovie' => 'required|numeric',
+        'IdUser' => 'required|numeric',
+        'Body' => 'required|string',
+        'dateCreate' =>  'required|date'
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    try {
+      $addComment = DB::table('Comments')
+        ->insert([
+          'IdMovie' => $request['IdMovie'],
+          'IdUser' => $request['IdUser'],
+          'UserName' => $request['UserName'],
+          'Body' => $request['Body'],
+          'created_at' =>  $request['dateCreate'],
+          'updated_at' =>  $request['dateCreate'],
+        ]);
+    } catch (ModelNotFoundException $exception) {
+      return back()->withError($exception->getMessage())->withInput();
+    }
+    return response()->json(
+      ["CREATED"],
+      200
+    );
+  }
 }

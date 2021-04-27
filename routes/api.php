@@ -72,6 +72,9 @@ $router->group(['middleware' => 'api',
   $router->get('ShowGenres/{slug1}/{slug2?}/{slug3?}', [
     'uses' => 'GenresController@ShowGenres'
   ]);
+  $router->get('ShowGenreList', [
+    'uses' => 'GenresController@ShowGenreList'
+  ]);
   $router->get('ShowCollection/{slug1}/{slug2?}/{slug3?}', [
     'uses' => 'CollectionController@ShowCollection'
   ]);

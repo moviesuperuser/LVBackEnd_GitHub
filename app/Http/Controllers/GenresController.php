@@ -16,6 +16,12 @@ class GenresController extends Controller
         ->header('Access-Control-Allow-Origin', '*')
         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   }
+  public function ShowGenreList(){
+    $genres = DB::table('Genres')
+    ->select('GenreName')
+    ->get();
+    return $this->createJsonResult($genres);
+  }
   public function GenresTest(){
     $response = DB::statement("select * from Movies  where match (Description,`Title`,`Actors`,`Director`,`GenreName`) against ('Crime' IN NATURAL LANGUAGE MODE)");
     return $this->createJsonResult($response);

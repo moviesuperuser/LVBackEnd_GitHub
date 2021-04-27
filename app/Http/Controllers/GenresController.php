@@ -20,7 +20,16 @@ class GenresController extends Controller
     $genres = DB::table('Genres')
     ->select('GenreName')
     ->get();
-    return $this->createJsonResult($genres);
+    $result = [];
+    foreach($genres as $gerne){
+      $gerneResult = Array(
+        'value'=>$gerne->GenreName,
+        'label'=>$gerne->GenreName
+      );
+      $gerneResult =(object)$gerneResult;
+      $result[] = $gerneResult;
+    }
+    return $this->createJsonResult($result);
   }
   public function GenresTest(){
     $response = DB::statement("select * from Movies  where match (Description,`Title`,`Actors`,`Director`,`GenreName`) against ('Crime' IN NATURAL LANGUAGE MODE)");

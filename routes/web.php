@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::post('/upload', function (Request $request) {
     
-  $filename = $request->file("thing")->store("1jF_4AYVCqrSduKWyoC1kG7-JAKwKsFEn","google") ;
+  $filename = $request->file("thing")->store("1pc05ZmozeUN-ofSgO8ugg9wG7cQU2BL1","google") ;
   dump($filename);
   $googleDriveStorage = Storage::disk('google');
   $dir = '/';
@@ -31,12 +31,13 @@ Route::post('/upload', function (Request $request) {
       ->sortBy('timestamp')
       ->last();
   dump("FILE NAME : ");
-  dump($file);
   dump('_____________________________');
   dump(Storage::Disk('google')->url($file['path']));
+  dump($file);
   #echo '<img src='.$link .' alt="Girl in a jacket">';
   $file_id = $file['basename'];
   $link = 'https://drive.google.com/file/d/'.$file_id .'/preview';
+  dump($link);
   #echo '<iframe frameborder="0" width="640" height="480" src="'.$link1.'" ; allowfullscreen="true" allow="autoplay"></iframe>';
   echo '<iframe frameborder="0" width="640" height="480" src="'.$link.'" ; allowfullscreen="true" allow="autoplay"></iframe>';
 

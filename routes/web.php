@@ -18,22 +18,43 @@ Route::get('/', function () {
 });
 
 Route::post('/upload', function (Request $request) {
-  // dd($request->file("thing")->store("","google"));
-  // dd($request);
-  $filename = $request->file("thing")->store("1GwXyun7TeMPpZO5_O9JHfvWRBEjBfOeb","google") ;
-    dump($filename);
-    $googleDriveStorage = Storage::disk('google');
-    $dir = '/';
-    $recursive = true; // Get subdirectories also?
-    $file = collect(Storage::disk('google')->listContents($dir, $recursive))
-        ->where('type', '=', 'file')
-        ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
-        ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
-        ->sortBy('timestamp')
-        ->last();
-    dump($file);
-    dump(Storage::Disk('google')->url($file['path']));
-    $link = Storage::Disk('google')->url($file['path']);
-    echo '<img src='.$link .' alt="Girl in a jacket">';
-    // echo '<video>  <source src='. $link .' type="video/mp4"> </video>';
+    
+  $filename = $request->file("thing")->store("1jF_4AYVCqrSduKWyoC1kG7-JAKwKsFEn","google") ;
+  dump($filename);
+  $googleDriveStorage = Storage::disk('google');
+  $dir = '/';
+  $recursive = true; // Get subdirectories also?
+  $file = collect(Storage::disk('google')->listContents($dir, $recursive))
+      ->where('type', '=', 'file')
+      ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+      ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+      ->sortBy('timestamp')
+      ->last();
+  dump("FILE NAME : ");
+  dump($file);
+  dump('_____________________________');
+  dump(Storage::Disk('google')->url($file['path']));
+  #echo '<img src='.$link .' alt="Girl in a jacket">';
+  $file_id = $file['basename'];
+  $link = 'https://drive.google.com/file/d/'.$file_id .'/preview';
+  #echo '<iframe frameborder="0" width="640" height="480" src="'.$link1.'" ; allowfullscreen="true" allow="autoplay"></iframe>';
+  echo '<iframe frameborder="0" width="640" height="480" src="'.$link.'" ; allowfullscreen="true" allow="autoplay"></iframe>';
+
+});
+
+
+Route::get('newest', function() {
+  $filename = 'test.txt';
+
+  Storage::disk('google')->put($filename, \Carbon\Carbon::now()->toDateTimeString());
+
+  $dir = '/';
+  $recursive = false; // Get subdirectories also?
+  $file = collect(Storage::disk('google')->listContents($dir, $recursive))
+      ->where('type', '=', 'file')
+      ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+      ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+      ->sortBy('timestamp')
+      ->last();
+      dump(Storage::Disk('google')->url($file['path']));
 });

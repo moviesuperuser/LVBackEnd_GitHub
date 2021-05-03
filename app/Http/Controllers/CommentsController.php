@@ -174,7 +174,7 @@ class CommentsController extends Controller
         'id' => 'required|numeric',
         'IdMovie' => 'required|numeric',
         'IdUser' => 'required|numeric',
-        'IdParentUser' => 'sometimes|numeric',
+        'IdParentUser' => 'required|numeric',
         'UserName' => 'required|string',
         'Body' => 'required|string',
         'dateUpdate' =>  'required|date'
@@ -212,7 +212,8 @@ class CommentsController extends Controller
         'IdMovie' => 'required|numeric',
         'IdUser' => 'required|numeric',
         'Body' => 'required|string',
-        'dateCreate' =>  'required|date'
+        'dateCreate' =>  'required|date',
+        'IdParentUser' => 'required|numeric',
       ]
     );
     if ($validator->fails()) {
@@ -228,6 +229,7 @@ class CommentsController extends Controller
           'IdUser' => $request['IdUser'],
           'UserName' => $request['UserName'],
           'Body' => $request['Body'],
+          'IdParentUser' => $request['IdParentUser'],
           'created_at' =>  $request['dateCreate'],
           'updated_at' =>  $request['dateCreate'],
         ]);

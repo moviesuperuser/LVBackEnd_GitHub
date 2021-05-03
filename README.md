@@ -82,7 +82,8 @@ Parameters in `request`
 ```php
         'IdMovie' => 'required|numeric',  
         'IdUser' => 'required|numeric',  
-        'IdParentUser' => 'sometimes|numeric',  //If comment in root return `IdParentUser` = -1 
+        'IdParentUser' => 'required|numeric',  
+        //If comment in root return  `IdParentUser` = -1 
         'UserName' => 'required|string',        // It is name in User not username
         'Body' => 'required|string',  
         'dateUpdate' =>  'required|date'  
@@ -96,7 +97,8 @@ Parameters in `request`
         'id' => 'required|numeric', 
         'IdMovie' => 'required|numeric', 
         'IdUser' => 'required|numeric', 
-        'IdParentUser' => 'sometimes|numeric',  //If comment in root return `IdParentUser` = -1
+        'IdParentUser' => 'required|numeric',  
+        //If comment in root return `IdParentUser` = -1
         'UserName' => 'required|string',        // It is name in User not username
         'Body' => 'required|string', 
         'dateCreate' =>  'required|date' 
@@ -123,7 +125,15 @@ Parameters in `request`
           'IdUser'      => 'required|numeric',
           'Rating'      => 'required|numeric|min:0|max:10',
           'Review'      => 'required|string',
-          'titleReview' => 'sometimes|string',
+          'titleReview' => 'sometimes|string', 
+          //Nếu trường titleReview null không truyền trường titleReview vào trong Request
           'dateCreate'  => 'required|date'
 ```  
-
+VD: \
+```php
+          'IdMovie'     =  1,
+          'IdUser'      =  24,
+          'Rating'      =  5,
+          'Review'      =  "Prof. Kelvin Witting DVM",
+          'dateCreate'  = '2021-03-14 06:21:56'
+```  

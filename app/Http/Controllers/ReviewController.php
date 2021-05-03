@@ -86,8 +86,18 @@ class ReviewController extends Controller
       return "Successful";
     }
     else{
-      return "Review is exist.";
-    }
-    
+      $updateReview = DB::table('Watches')
+      ->where('IdMovie',$request['IdMovie'])
+      ->where('IdUser',$request['IdUser'])
+    ->update([
+        'IdMovie' => $request['IdMovie'],
+        'IdUser' => $request['IdUser'],
+        'Rating' => $request['Rating'],
+        'Review' => $request['Review'],
+        'titleReview' =>  $request['titleReview'],
+        'updated_at' =>  $request['dateCreate'],
+      ]);
+      return "Successful";
   }
+}
 }

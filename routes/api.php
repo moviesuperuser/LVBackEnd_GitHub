@@ -47,6 +47,8 @@ Route::group(
     Route::post('addComment', 'CommentsController@addComment');
     Route::post('updateComment', 'CommentsController@updateComment');
     Route::post('action', 'CommentsController@action');
+    Route::get('showCommentsUserLike', 'CommentsController@showCommentsUserLike');
+    Route::get('showCommentsUserDisLike', 'CommentsController@showCommentsUserDisLike');
   }
 );
 //Review API

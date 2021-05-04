@@ -124,7 +124,55 @@ class CommentsController extends Controller
       ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   }
 
-
+  public function showCommentsUserLike(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'IdMovie'     => 'required|numeric',
+        'IdUser'     => 'required|numeric',
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $rootComments = DB::table('Comments')
+      ->join('Comment_action','Comment_action.IdComment','Comments.id',)
+      ->where('Comments.IdMovie', '=', $request->IdMovie)
+      ->where('Comment_action.IdUser', '=', $request->IdUser)
+      ->where('Comment_action.Action', 1)
+      ->select("Comments.IdMovie","Comment_action.IdComment","Comment_action.IdUser","Comments.Flag","Comments.IdParentUSer","Comment_action.Action")
+      // ->select("*")
+      ->get();
+    return $this->createJsonResult($rootComments);
+  }
+  public function showCommentsUserDisLike(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'IdMovie'     => 'required|numeric',
+        'IdUser'     => 'required|numeric',
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $rootComments = DB::table('Comments')
+      ->join('Comment_action','Comment_action.IdComment','Comments.id',)
+      ->where('Comments.IdMovie', '=', $request->IdMovie)
+      ->where('Comment_action.IdUser', '=', $request->IdUser)
+      ->where('Comment_action.Action', -1)
+      ->select("Comments.IdMovie","Comment_action.IdComment","Comment_action.IdUser","Comments.Flag","Comments.IdParentUSer","Comment_action.Action")
+      ->get();
+    return $this->createJsonResult($rootComments);
+  }
   public function showComments($IdMovie)
   {
     $rootComments = DB::table('Comments')

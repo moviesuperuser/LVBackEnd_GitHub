@@ -140,7 +140,7 @@ class AuthController extends Controller
     );
     $requestRecombee->setTimeout(5000);
     $client->send($requestRecombee);
-    return response()->json(['message' => 'Comment created successfully']);
+    return response()->json(['message' => 'User created successfully']);
   } //end register()
 
 

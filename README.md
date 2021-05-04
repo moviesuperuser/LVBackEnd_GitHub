@@ -74,7 +74,6 @@ REQUEST:
 
 1. showComments: \
     `/api/comment/showComments/{IdMovie}` : GET method 
-
 2. addComment: \
     `/api/comment/addComment` : POST method  \
 Required post `request` parameters `id`, `IdMovie`, `IdUser`,`IdParentUser`,`Body`,`dateUpdate` \
@@ -113,7 +112,23 @@ Parameters in `request`
         'IdUser'    => 'required|numeric',
         'Action'    => 'required|numeric|min:-1|max:1',   //Like=1 ; Dislike=-1 ; Nothing = 0 
         'date'      => 'required|date'
-```   
+```  
+5. showCommentsUserDisLike: \
+    `/api/comment/showCommentsUserDisLike` : GET method 
+Required get `request` parameters `IdMovie`, `IdUser`
+Parameters in `request` 
+```php
+        'IdMovie' => 'required|numeric',  
+        'IdUser' => 'required|numeric',  
+```
+6. showCommentsUserLike: \
+    `/api/comment/showCommentsUserLike` : GET method 
+Required get `request` parameters `IdMovie`, `IdUser`
+Parameters in `request` 
+```php
+        'IdMovie' => 'required|numeric',  
+        'IdUser' => 'required|numeric',  
+``` 
 
 ###  API Review:
 1. showReviews: \

@@ -116,7 +116,7 @@ class AuthController extends Controller
     //   )
     // );
     //UPload REcomendBee
-    $client = new Client("movies-dev", 'QKR26O5fSEtJnB7dxPrlpkE2rH2f093uh0ir5PlbrBphGEWYy8cl3rTIRxvqhzB1');
+    $client = new Client("movies-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     // $test = {"Film-Noir", "Mystery"};
     $requestRecombee = 
       new Reqs\SetUserValues(

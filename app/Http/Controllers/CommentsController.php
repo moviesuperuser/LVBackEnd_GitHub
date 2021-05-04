@@ -124,7 +124,67 @@ class CommentsController extends Controller
       ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   }
 
-  public function showCommentsUserLike(Request $request)
+  // public function showCommentsUserLike(Request $request)
+  // {
+  //   $validator = Validator::make(
+  //     $request->all(),
+  //     [
+  //       'IdMovie'     => 'required|numeric',
+  //       'IdUser'     => 'required|numeric',
+  //     ]
+  //   );
+  //   if ($validator->fails()) {
+  //     return response()->json(
+  //       [$validator->errors()],
+  //       422
+  //     );
+  //   }
+  //   $UserLikeList = DB::table('Comments')
+  //     ->join('Comment_action','Comment_action.IdComment','Comments.id',)
+  //     ->where('Comments.IdMovie', '=', $request->IdMovie)
+  //     ->where('Comment_action.IdUser', '=', $request->IdUser)
+  //     ->where('Comment_action.Action', 1)
+  //     ->select("Comment_action.IdComment")
+  //     ->get();
+  //   $LikeList = $this->getIDCommentList($UserLikeList);
+  //   $result = array(
+  //     'LikeList'=>$LikeList
+  //   );
+  //   return $this->createJsonResult($result);
+  // }
+  private function getIDCommentList($List){
+    $result = [];
+    foreach($List as $comment){
+      $comment=(array)$comment;
+      array_push($result,$comment['IdComment']);
+    }
+    return $result;
+  }
+  // public function showCommentsUserDisLike(Request $request)
+  // {
+  //   $validator = Validator::make(
+  //     $request->all(),
+  //     [
+  //       'IdMovie'     => 'required|numeric',
+  //       'IdUser'     => 'required|numeric',
+  //     ]
+  //   );
+  //   if ($validator->fails()) {
+  //     return response()->json(
+  //       [$validator->errors()],
+  //       422
+  //     );
+  //   }
+  //   $rootComments = DB::table('Comments')
+  //     ->join('Comment_action','Comment_action.IdComment','Comments.id',)
+  //     ->where('Comments.IdMovie', '=', $request->IdMovie)
+  //     ->where('Comment_action.IdUser', '=', $request->IdUser)
+  //     ->where('Comment_action.Action', -1)
+  //     ->select("Comment_action.IdComment")
+  //     ->get();
+  //   return $this->createJsonResult($rootComments);
+  // }
+  public function showComments(Request $request)
   {
     $validator = Validator::make(
       $request->all(),
@@ -139,53 +199,41 @@ class CommentsController extends Controller
         422
       );
     }
-    $rootComments = DB::table('Comments')
+
+    //Get User Like List
+    $UserLikeList = DB::table('Comments')
       ->join('Comment_action','Comment_action.IdComment','Comments.id',)
       ->where('Comments.IdMovie', '=', $request->IdMovie)
       ->where('Comment_action.IdUser', '=', $request->IdUser)
       ->where('Comment_action.Action', 1)
-      ->select("Comments.IdMovie","Comment_action.IdComment","Comment_action.IdUser","Comments.Flag","Comments.IdParentUSer","Comment_action.Action")
-      // ->select("*")
+      ->select("Comment_action.IdComment")
       ->get();
-    return $this->createJsonResult($rootComments);
-  }
-  public function showCommentsUserDisLike(Request $request)
-  {
-    $validator = Validator::make(
-      $request->all(),
-      [
-        'IdMovie'     => 'required|numeric',
-        'IdUser'     => 'required|numeric',
-      ]
-    );
-    if ($validator->fails()) {
-      return response()->json(
-        [$validator->errors()],
-        422
-      );
-    }
-    $rootComments = DB::table('Comments')
+    $LikeList = $this->getIDCommentList($UserLikeList);
+    
+    //Get User DisLike List
+    $UserDislikeList = DB::table('Comments')
       ->join('Comment_action','Comment_action.IdComment','Comments.id',)
       ->where('Comments.IdMovie', '=', $request->IdMovie)
       ->where('Comment_action.IdUser', '=', $request->IdUser)
       ->where('Comment_action.Action', -1)
-      ->select("Comments.IdMovie","Comment_action.IdComment","Comment_action.IdUser","Comments.Flag","Comments.IdParentUSer","Comment_action.Action")
+      ->select("Comment_action.IdComment")
       ->get();
-    return $this->createJsonResult($rootComments);
-  }
-  public function showComments($IdMovie)
-  {
+    $DislikeList = $this->getIDCommentList($UserDislikeList);
+  // }
+  // else{$DislikeList =}
+    
+    //Get Comment List
     $rootComments = DB::table('Comments')
-      ->where('IdMovie', '=', $IdMovie)
+      ->where('IdMovie', '=', $request->IdMovie)
       ->where('IdParentUser', -1)
       ->orderBy('Sumlike', "DESC")
       ->select("*")
       ->get();
-    $result = [];
+    $resultComment = [];
     foreach ($rootComments as $comment) {
       $comment = (array)$comment;
       $childComments = DB::table('Comments')
-        ->where('IdMovie', '=', $IdMovie)
+        ->where('IdMovie', '=', $request->IdMovie)
         ->where('IdParentUser', $comment['id'])
         ->orderBy('created_at', "DESC")
         ->select("*")
@@ -210,8 +258,13 @@ class CommentsController extends Controller
         'updated_at' =>  $comment['updated_at'],
         'childComments' => $childCommentsJson
       );
-      $result = array_merge($result, array($comment_result));
+      $resultComment = array_merge($resultComment, array($comment_result));
     }
+    $result = array(
+      'LikeList' => $LikeList,
+      "DislikeList" =>$DislikeList,
+      'Comments' =>$resultComment
+    );
     return $this->createJsonResult($result);
   }
   public function updateComment(Request $request)

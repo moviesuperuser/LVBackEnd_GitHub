@@ -43,7 +43,7 @@ Route::group(
     'prefix'     => 'comment',
   ],
   function ($router) {
-    Route::get('showComments/{IdMovie}', 'CommentsController@showComments');
+    Route::get('showComments', 'CommentsController@showComments');
     Route::post('addComment', 'CommentsController@addComment');
     Route::post('updateComment', 'CommentsController@updateComment');
     Route::post('action', 'CommentsController@action');

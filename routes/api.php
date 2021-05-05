@@ -31,6 +31,7 @@ Route::group(
     Route::get('logout', 'AuthController@logout');
     Route::get('profile', 'AuthController@profile');
     Route::post('refresh', 'AuthController@refresh');
+    Route::post('editUserImg', 'ReviewController@editUserImg');
   }
 );
 //Comment API

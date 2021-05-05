@@ -15,7 +15,6 @@ use Carbon\Carbon;
 class AuthController extends Controller
 {
 
-
   public function __construct()
   {
     $this->middleware('auth:api', ['except' => ['login', 'register']]);
@@ -48,10 +47,10 @@ class AuthController extends Controller
   } //end login()
 
 
-  
+
   public function register(Request $request)
   {
-    $toArrayPreferedGenres = explode(",",$request->PreferedGenres);
+    $toArrayPreferedGenres = explode(",", $request->PreferedGenres);
     $validator = Validator::make(
       $request->all(),
       [
@@ -116,9 +115,9 @@ class AuthController extends Controller
     //   )
     // );
     //UPload REcomendBee
-    $client = new Client("movies-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
+    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
     // $test = {"Film-Noir", "Mystery"};
-    $requestRecombee = 
+    $requestRecombee =
       new Reqs\SetUserValues(
         $user->id,
         [
@@ -128,7 +127,7 @@ class AuthController extends Controller
           "age" => Carbon::parse($request->dateOfBirth)->age,
           "gender" => $request->gender,
           "VIP" => false,
-          "FreeTrial"=>true,
+          "FreeTrial" => true,
           "urlAvatar" => $urlAvatar,
           "PreferedGenres" => json_decode(json_encode($toArrayPreferedGenres), FALSE),
           "ShareInfo" => $request->ShareInfo
@@ -137,7 +136,7 @@ class AuthController extends Controller
         [
           "cascadeCreate" => true
         ]
-    );
+      );
     $requestRecombee->setTimeout(5000);
     $client->send($requestRecombee);
     return response()->json(['message' => 'User created successfully']);

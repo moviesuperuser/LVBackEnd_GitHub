@@ -73,13 +73,7 @@ REQUEST:
 ###  API Comment: 
 
 1. showComments: \
-    `/api/comment/showComments` : GET method 
-    Required get `request` parameters `IdMovie`, `IdUser`
-Parameters in `request` 
-```php
-        'IdMovie' => 'required|numeric',  
-        'IdUser' => 'required|numeric',  
-```
+    `/api/comment/showComments/{IdMovie}` : GET method 
 
 2. addComment: \
     `/api/comment/addComment` : POST method  \
@@ -120,6 +114,15 @@ Parameters in `request`
         'Action'    => 'required|numeric|min:-1|max:1',   //Like=1 ; Dislike=-1 ; Nothing = 0 
         'date'      => 'required|date'
 ```  
+
+5. showCommentsUserAction: \
+    `/api/comment/showComments/showCommentsUserAction` : GET method 
+    Required get `request` parameters `IdMovie`, `IdUser`
+Parameters in `request` 
+```php
+        'IdMovie' => 'required|numeric',  
+        'IdUser' => 'required|numeric',  
+```
 
 ###  API Review:
 1. showReviews: \

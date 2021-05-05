@@ -43,12 +43,12 @@ Route::group(
     'prefix'     => 'comment',
   ],
   function ($router) {
-    Route::get('showComments', 'CommentsController@showComments');
+    Route::get('showComments/{IdMovie}', 'CommentsController@showComments');
     Route::post('addComment', 'CommentsController@addComment');
     Route::post('updateComment', 'CommentsController@updateComment');
     Route::post('action', 'CommentsController@action');
-    Route::get('showCommentsUserLike', 'CommentsController@showCommentsUserLike');
-    Route::get('showCommentsUserDisLike', 'CommentsController@showCommentsUserDisLike');
+    Route::get('showCommentsUserAction', 'CommentsController@showCommentsUserAction');
+    // Route::get('showCommentsUserDisLike', 'CommentsController@showCommentsUserDisLike');
   }
 );
 //Review API

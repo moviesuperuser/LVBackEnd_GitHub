@@ -116,7 +116,7 @@ Parameters in `request`
 ```  
 
 5. showCommentsUserAction: \
-    `/api/comment/showComments/showCommentsUserAction` : GET method 
+    `/api/comment/showCommentsUserAction` : GET method 
     Required get `request` parameters `IdMovie`, `IdUser`
 Parameters in `request` 
 ```php

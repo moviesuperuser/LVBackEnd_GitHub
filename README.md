@@ -124,6 +124,16 @@ Parameters in `request`
         'IdUser' => 'required|numeric',  
 ```
 
+6. FlagAction: \
+    `/api/comment/FlagAction` : POST METHOD  \
+Required post `request` parameters `IdComment`, `IdUser`,`Flag` \
+Parameters in `request`  
+```php
+       'IdComment' => 'required|numeric',
+        'IdUser'    => 'required|numeric',
+        'Flag'      => 'required|numeric|min:0|max:1'
+```  
+
 ###  API Review:
 1. showReviews: \
     `/api/comment/showReviews/{IdMovie}` : GET method 

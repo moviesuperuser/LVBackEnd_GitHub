@@ -48,6 +48,7 @@ Route::group(
     Route::post('addComment', 'CommentsController@addComment');
     Route::post('updateComment', 'CommentsController@updateComment');
     Route::post('action', 'CommentsController@action');
+    Route::post('FlagAction', 'CommentsController@FlagAction');
     Route::get('showCommentsUserAction', 'CommentsController@showCommentsUserAction');
     // Route::get('showCommentsUserDisLike', 'CommentsController@showCommentsUserDisLike');
   }

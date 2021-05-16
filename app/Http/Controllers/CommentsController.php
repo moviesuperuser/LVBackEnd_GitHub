@@ -10,8 +10,76 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
+use function PHPSTORM_META\type;
+
 class CommentsController extends Controller
 {
+  public function FlagAction(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'IdComment' => 'required|numeric',
+        'IdUser'    => 'required|numeric',
+        'Flag'      => 'required|numeric|min:0|max:1'
+
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    if ($request['Flag'] == true) {
+      $action_check = (array)DB::table('Flag_action')
+        ->where('IdComment', $request['IdComment'])
+        ->where('IdUSer', $request['IdUser'])
+        ->select('IdComment')
+        ->first();
+      if (count($action_check) == 0) {
+        $insert_Comment_Action = DB::table('Flag_action')
+          ->insert([
+            'IdComment' => $request['IdComment'],
+            'IdUser' => $request['IdUser']
+          ]);
+        $IdComment = $request['IdComment'];
+        $Update_FLag_Comment = DB::update('UPDATE Comments SET Flag = Flag + 1 where id='.$IdComment);
+        return response()->json(
+          "Successfull",
+          200
+        );
+      } else {
+        return response()->json(
+          "Error!",
+          422
+        );
+      }
+    } else {
+      $action_check = (array)DB::table('Flag_action')
+        ->where('IdComment', $request['IdComment'])
+        ->where('IdUSer', $request['IdUser'])
+        ->select('IdComment')
+        ->first();
+      if (count($action_check) == 1) {
+        $action_Comment_check = DB::table('Flag_action')
+          ->where('IdComment', $request['IdComment'])
+          ->where('IdUser', $request['IdUser'])
+          ->delete();
+          $IdComment = $request['IdComment'];
+          $Update_FLag_Comment = DB::update('UPDATE Comments SET Flag = Flag - 1 where id='.$IdComment);
+        return response()->json(
+          "Successfull",
+          200
+        );
+      } else {
+        return response()->json(
+          "Error!",
+          422
+        );
+      }
+    }
+  }
   public function action(Request $request)
   {
     $validator = Validator::make(
@@ -151,12 +219,20 @@ class CommentsController extends Controller
       ->where('Comment_action.Action', -1)
       ->select("Comment_action.IdComment")
       ->get();
+    $UserFlagList = DB::table('Comments')
+    ->join('Flag_action', 'Flag_action.IdComment', 'Comments.id',)
+    ->where('Comments.IdMovie', '=', $request->IdMovie)
+    ->where('Flag_action.IdUser', '=', $request->IdUser)
+    ->select("Flag_action.IdComment")
+    ->get();
     $LikeList = $this->getIDCommentList($UserLikeList);
 
     $DisLikeList = $this->getIDCommentList($UserDislikeList);
+    $FlagList = $this->getIDCommentList($UserFlagList);
     $result = array(
       'LikeList' => $LikeList,
-      'DislikeList' => $DisLikeList
+      'DislikeList' => $DisLikeList,
+      'FlagList' => $FlagList
     );
     return $this->createJsonResult($result);
   }

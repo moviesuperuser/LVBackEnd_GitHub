@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
-use function PHPSTORM_META\type;
 
 class CommentsController extends Controller
 {
+  
   public function FlagAction(Request $request)
   {
     $validator = Validator::make(

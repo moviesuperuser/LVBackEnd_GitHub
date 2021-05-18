@@ -92,19 +92,20 @@ class AuthController extends Controller
       $request->merge(['urlAvatar' => ""]);
     }
 
-    $user = new User();
-    $user->username = $request->username;
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->password = bcrypt($request->password);
-    $user->SocialMedia = $request->SocialMedia;
-    $user->dateOfBirth = $request->dateOfBirth;
-    $user->gender = $request->gender;
-    $user->urlAvatar = $request->urlAvatar;
-    $user->PreferedGenres = $request->PreferedGenres;
-    $user->ShareInfo = $request->ShareInfo;
-    $user->id = $user->id;
-    $user->save();
+    return $request->PreferedGenres;
+    // $user = new User();
+    // $user->username = $request->username;
+    // $user->name = $request->name;
+    // $user->email = $request->email;
+    // $user->password = bcrypt($request->password);
+    // $user->SocialMedia = $request->SocialMedia;
+    // $user->dateOfBirth = $request->dateOfBirth;
+    // $user->gender = $request->gender;
+    // $user->urlAvatar = $request->urlAvatar;
+    // $user->PreferedGenres = $request->PreferedGenres;
+    // $user->ShareInfo = $request->ShareInfo;
+    // $user->id = $user->id;
+    // $user->save();
 
 
 

@@ -47,7 +47,17 @@ class AuthController extends Controller
   } //end login()
 
 
-
+  private function PreferedGenresFormat($PreferedGenres){
+    $result = str_replace(' ', '', $PreferedGenres);
+    $result =  str_replace('{', '', $result);
+      return str_replace('}', '', $result);
+  }
+  private function PreferedGenresFormatRecombee($PreferedGenres){
+    $result = str_replace('}', '', $PreferedGenres);
+    $result =  str_replace('{', '', $result);
+    $toArrayPreferedGenres = explode(",", $result);
+      return json_decode(json_encode($toArrayPreferedGenres), FALSE);
+  }
   public function register(Request $request)
   {
     $toArrayPreferedGenres = explode(",", $request->PreferedGenres);
@@ -92,32 +102,22 @@ class AuthController extends Controller
       $request->merge(['urlAvatar' => ""]);
     }
 
-    return $request->PreferedGenres;
-    // $user = new User();
-    // $user->username = $request->username;
-    // $user->name = $request->name;
-    // $user->email = $request->email;
-    // $user->password = bcrypt($request->password);
-    // $user->SocialMedia = $request->SocialMedia;
-    // $user->dateOfBirth = $request->dateOfBirth;
-    // $user->gender = $request->gender;
-    // $user->urlAvatar = $request->urlAvatar;
-    // $user->PreferedGenres = $request->PreferedGenres;
-    // $user->ShareInfo = $request->ShareInfo;
-    // $user->id = $user->id;
-    // $user->save();
+    $user = new User();
+    $user->username = $request->username;
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->password = bcrypt($request->password);
+    $user->SocialMedia = $request->SocialMedia;
+    $user->dateOfBirth = $request->dateOfBirth;
+    $user->gender = $request->gender;
+    $user->urlAvatar = $request->urlAvatar;
+    $user->PreferedGenres =$this->PreferedGenresFormat($request->PreferedGenres);
+    $user->ShareInfo = $request->ShareInfo;
+    $user->id = $user->id;
+    $user->save();
 
-
-
-    // $user = User::create(
-    //   array_merge(
-    //     $validator->validated(),
-    //     ['password' => bcrypt($request->password)]
-    //   )
-    // );
     //UPload REcomendBee
     $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
-    // $test = {"Film-Noir", "Mystery"};
     $requestRecombee =
       new Reqs\SetUserValues(
         $user->id,
@@ -130,7 +130,7 @@ class AuthController extends Controller
           "VIP" => false,
           "FreeTrial" => true,
           "urlAvatar" => $urlAvatar,
-          "PreferedGenres" => json_decode(json_encode($toArrayPreferedGenres), FALSE),
+          "PreferedGenres" => $this->PreferedGenresFormatRecombee($request->PreferedGenres),
           "ShareInfo" => $request->ShareInfo
         ],
         //optional parameters

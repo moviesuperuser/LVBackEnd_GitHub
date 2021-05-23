@@ -46,6 +46,60 @@ class ReviewController extends Controller
     $client->send($requestRecombee);
     return "Successful";
   }
+  public function updateShareInfo(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'ShareInfo' => 'required|numeric|min:0|max:1',
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $user = User::find($request->id);
+    $user->urlAvatar = $request->ShareInfo;
+    $user->save();
+    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $requestRecombee = new Reqs\SetUserValues($request->id, [
+      'ShareInfo' => $request['ShareInfo'],
+    ], [
+      'cascadeCreate' => false
+    ]);
+    $requestRecombee->setTimeout(5000);
+    $client->send($requestRecombee);
+    return "Successful";
+  }
+  public function updateNewsletter(Request $request)
+  {
+    $validator = Validator::make(
+      $request->all(),
+      [    
+        'Newsletter' => 'required|numeric|min:0|max:1',
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $user = User::find($request->id);
+    $user->Newsletter = $request->Newsletter;
+    $user->save();
+    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $requestRecombee = new Reqs\SetUserValues($request->id, [
+      'Newsletter' => $request['Newsletter'],
+    ], [
+      'cascadeCreate' => false
+    ]);
+    $requestRecombee->setTimeout(5000);
+    $client->send($requestRecombee);
+    return "Successful";
+  }
   public function editUser(Request $request){
     
     $user = User::find($request->id);

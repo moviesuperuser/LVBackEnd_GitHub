@@ -19,8 +19,6 @@ class AuthController extends Controller
   {
     $this->middleware('auth:api', ['except' => ['login', 'register']]);
   } //end __construct()
-
-
   public function login(Request $request)
   {
     $validator = Validator::make(

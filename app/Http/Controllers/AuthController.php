@@ -73,6 +73,7 @@ class AuthController extends Controller
         'gender' => 'required|string',
         'urlAvatar' => 'sometimes|string',
         'ShareInfo' => 'required|numeric|min:0|max:1',
+        'Newsletter' => 'required|numeric|min:0|max:1',
         'PreferedGenres' => 'required|string'
 
       ]
@@ -113,6 +114,7 @@ class AuthController extends Controller
     $user->urlAvatar = $request->urlAvatar;
     $user->PreferedGenres =$this->PreferedGenresFormat($request->PreferedGenres);
     $user->ShareInfo = $request->ShareInfo;
+    $user->Newsletter = $request->Newsletter;
     $user->id = $user->id;
     $user->save();
 
@@ -131,7 +133,8 @@ class AuthController extends Controller
           "FreeTrial" => true,
           "urlAvatar" => $urlAvatar,
           "PreferedGenres" => $this->PreferedGenresFormatRecombee($request->PreferedGenres),
-          "ShareInfo" => $request->ShareInfo
+          "ShareInfo" => $request->ShareInfo,
+          "Newsletter" => $request->Newsletter
         ],
         //optional parameters
         [

@@ -51,6 +51,7 @@ class ReviewController extends Controller
     $validator = Validator::make(
       $request->all(),
       [
+        'id'        => 'required|numeric',
         'ShareInfo' => 'required|numeric|min:0|max:1',
       ]
     );
@@ -61,7 +62,7 @@ class ReviewController extends Controller
       );
     }
     $user = User::find($request->id);
-    $user->urlAvatar = $request->ShareInfo;
+    $user->ShareInfo = $request->ShareInfo;
     $user->save();
     $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
     $requestRecombee = new Reqs\SetUserValues($request->id, [

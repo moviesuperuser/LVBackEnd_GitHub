@@ -250,8 +250,8 @@ class CommentsController extends Controller
     $rootComments = DB::table('Comments')
       ->where('IdMovie', '=', $IdMovie)
       ->where('IdParentUser', -1)
+      ->orderBy('created_at', "DESC")
       ->orderBy('Sumlike', "DESC")
-      ->orderBy('Comments.created_at', "DESC")
       ->leftJoin('users', 'Comments.IdUser', '=', 'users.id')
       ->select("Comments.*",'users.urlAvatar')
       ->get();

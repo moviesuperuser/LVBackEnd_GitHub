@@ -261,8 +261,9 @@ class CommentsController extends Controller
       $childComments = DB::table('Comments')
         ->where('IdMovie', '=', $IdMovie)
         ->where('IdParentUser', $comment['id'])
+        ->leftJoin('users', 'Comments.IdUser', '=', 'users.id')
         ->orderBy('created_at', "DESC")
-        ->select("*")
+        ->select("Comments.*",'users.urlAvatar')
         ->get();
       if (count($childComments) == 0) {
         $childCommentsJson = [];

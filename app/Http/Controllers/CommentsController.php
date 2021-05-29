@@ -251,6 +251,8 @@ class CommentsController extends Controller
       ->where('IdMovie', '=', $IdMovie)
       ->where('IdParentUser', -1)
       ->orderBy('Sumlike', "DESC")
+      ->orderBy('Comments.created_at', "DESC")
+      ->leftJoin('users', 'Comments.IdUser', '=', 'users.id')
       ->select("*")
       ->get();
     $result = [];
@@ -273,6 +275,7 @@ class CommentsController extends Controller
         'IdUser' => $comment['IdUser'],
         'IdParentUser' => $comment['IdParentUser'],
         'UserName' => $comment['UserName'],
+        'urlAvatar' =>$comment['urlAvatar'],
         'Body' => $comment['Body'],
         'Flag' => $comment['Flag'],
         'Like' => $comment['Like'],

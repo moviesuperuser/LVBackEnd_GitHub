@@ -253,7 +253,7 @@ class CommentsController extends Controller
       ->orderBy('Sumlike', "DESC")
       ->orderBy('Comments.created_at', "DESC")
       ->leftJoin('users', 'Comments.IdUser', '=', 'users.id')
-      ->select("*")
+      ->select("Comments.*",'users.urlAvatar')
       ->get();
     $result = [];
     foreach ($rootComments as $comment) {

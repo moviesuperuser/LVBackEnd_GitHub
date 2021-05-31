@@ -156,3 +156,31 @@ VD: \
           'Review'      =  "Prof. Kelvin Witting DVM",
           'dateCreate'  = '2021-03-14 06:21:56'
 ```  
+###  API WatchLater:
+1. showWatchLaterList: \
+    `/api/movie/showWatchLaterList` : GET method 
+```php
+          'IdUser'      => 'required|numeric',   
+```  
+2. addWatchLater: \
+    `/api/movie/addWatchLater` : POST method
+```php
+          'IdMovie'      => 'required|numeric',
+          'IdUser'      => 'required|numeric',   
+```  
+VD: \
+```php
+          'IdMovie'     =  1,
+          'IdUser'      =  1,
+```  
+3. deleteWatchLater: \
+    `/api/movie/deleteWatchLater` : POST method
+```php
+          'IdMovie'      => 'required|numeric',
+          'IdUser'      => 'required|numeric',   
+```  
+VD: \
+```php
+          'IdMovie'     =  1,
+          'IdUser'      =  1,
+```  

@@ -69,6 +69,20 @@ Route::group(
   }
 );
 
+//Movie API
+Route::group(
+  [
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+    'prefix'     => 'movie',
+  ],
+  function ($router) {
+    Route::post('addWatchLater', 'MovieController@addWatchLater');
+    Route::post('deleteWatchLater', 'MovieController@deleteWatchLater');
+    Route::get('showWatchLaterList', 'MovieController@showWatchLaterList');
+  }
+);
+
 
 $router->group(['middleware' => 'api',
 'namespace'  => 'App\Http\Controllers',], function () use ($router) {

@@ -23,7 +23,7 @@ If you want to TEST add "Accept" in Key and "application/json" in Value in Heade
 
     `/api/auth/register`: POST method.
 
-Required post `request` parameters `name`, `email`, `password`,`email`,`dateOfBirth`,`gender`,`ShareInfo`. \
+Required post `request` parameters `name`, `email`, `password`,`SocialMedia`,`dateOfBirth`,`gender`,`ShareInfo`. \
 Parameters in `request` 
 ```php
       `username`     => 'required|string|between:2,100', 

@@ -36,7 +36,7 @@ class ReviewController extends Controller
     $user = User::find($request->id);
     $user->urlAvatar = $request->urlAvatar;
     $user->save();
-    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $client = new Client("movies202-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     $requestRecombee = new Reqs\SetUserValues($request->id, [
       'urlAvatar' => $request['urlAvatar'],
     ], [
@@ -64,7 +64,7 @@ class ReviewController extends Controller
     $user = User::find($request->id);
     $user->ShareInfo = $request->ShareInfo;
     $user->save();
-    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $client = new Client("movies202-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     $requestRecombee = new Reqs\SetUserValues($request->id, [
       'ShareInfo' => $request['ShareInfo'],
     ], [
@@ -91,7 +91,7 @@ class ReviewController extends Controller
     $user = User::find($request->id);
     $user->Newsletter = $request->Newsletter;
     $user->save();
-    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $client = new Client("movies202-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     $requestRecombee = new Reqs\SetUserValues($request->id, [
       'Newsletter' => $request['Newsletter'],
     ], [
@@ -109,7 +109,7 @@ class ReviewController extends Controller
     $user->dateOfBirth = $request->dateOfBirth;
     $user->gender = $request->gender;
     $user->save();
-    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $client = new Client("movies202-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     $requestRecombee = new Reqs\SetUserValues($request->id, [
       'name' => $request['name'],
       'email' => $request['email'],

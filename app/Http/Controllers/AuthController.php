@@ -117,7 +117,7 @@ class AuthController extends Controller
     $user->save();
 
     //UPload REcomendBee
-    $client = new Client("movies1-dev", 'STcW4eS49qmjx4HBE7bJfklV7uDqNdKMoTBlP1rsGEf3kDPUSjCVC5AQlAn6QSle');
+    $client = new Client("movies202-dev", 'JPhrE3mFxojlFRbEaxzQNQFubp9h73V8h3JtRokprr5Kd3b7uE8O54ZpZOwHB0oT');
     $requestRecombee =
       new Reqs\SetUserValues(
         $user->id,

@@ -43,7 +43,7 @@ class GenresController extends Controller
   {
     return [
       'page' => $this->array_get($request, 'page', null),
-      'movienumber' => $this->array_get($request, 'movienumber', null),
+      'genrenumber' => $this->array_get($request, 'genrenumber', null),
       'sort' => $this->array_get($request, 'sort', null),
 
     ];
@@ -95,8 +95,8 @@ class GenresController extends Controller
       } else {
         $current_page = 1;
       }
-      if ($request['movienumber']) {
-        $show_product = $request['movienumber'];
+      if ($request['genrenumber']) {
+        $show_product = $request['genrenumber'];
         // dd($show_product);
       } else {
         $show_product = 20;

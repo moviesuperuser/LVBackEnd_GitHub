@@ -53,7 +53,7 @@ Parameters in `request`
 REQUEST: 
 ```php 
       `sort = value`  //with value=['A-to-Z','Z-to-A'] or undentify 
-      `movienumber = Interger` //if undentify movienumber = 20 
+      `genrenumber = Interger` //if undentify genrenumber = 20 
       `page = Interger` //if undentify page = 1   
 ```      
      
@@ -136,9 +136,9 @@ Parameters in `request`
 
 ###  API Review:
 1. showReviews: \
-    `/api/comment/showReviews/{IdMovie}` : GET method 
+    `/api/review/showReviews/{IdMovie}` : GET method 
 2. createReview: \
-    `/api/comment/createReview` : POST method
+    `/api/review/createReview` : POST method
 ```php
          'IdMovie'      => 'required|numeric',
           'IdUser'      => 'required|numeric',

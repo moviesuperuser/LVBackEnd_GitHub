@@ -34,6 +34,7 @@ Route::group(
     Route::post('editUserImg', 'ReviewController@editUserImg');
     Route::post('updateShareInfo', 'ReviewController@updateShareInfo');
     Route::post('updateNewsletter', 'ReviewController@updateNewsletter');
+    Route::post('changePasswordUser', 'ReviewController@changePasswordUser');
   }
 );
 //Comment API

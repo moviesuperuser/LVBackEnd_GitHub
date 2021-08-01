@@ -5,16 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use App\Models\Movie;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use Recombee\RecommApi\Client;
+use Illuminate\Support\Facades\Hash;
 use Recombee\RecommApi\Requests as Reqs;
-use Recombee\RecommApi\Exceptions as Ex;
-use Carbon\Carbon;
 
 class ReviewController extends Controller
 {
@@ -100,6 +97,36 @@ class ReviewController extends Controller
     $requestRecombee->setTimeout(5000);
     $client->send($requestRecombee);
     return "Successful";
+  }
+  public function changePasswordUser(Request $request){
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'id'  => 'required',
+        'oldPassword'     => 'required|string|min:6',
+        'newPassword' => 'required|string|min:6',
+      ]
+    );
+    if ($validator->fails()) {
+      return response()->json(
+        [$validator->errors()],
+        422
+      );
+    }
+    $userDB = User::find($request['id']);
+    if (Hash::check($request['oldPassword'], $userDB['password']) == true) {
+      $userDB->password = bcrypt($request['newPassword']);
+      $userDB->save();
+      return response()->json(
+        "Password was changed.",
+        200
+      );
+    }else{
+      return response()->json(
+        "Password is incorrect",
+        402
+      );
+    }
   }
   public function editUser(Request $request){
     

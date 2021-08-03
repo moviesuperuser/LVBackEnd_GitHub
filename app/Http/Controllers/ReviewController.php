@@ -180,8 +180,8 @@ class ReviewController extends Controller
         'IdMovie'     => 'required|numeric',
         'IdUser'     => 'required|numeric',
         'Rating'    => 'required|numeric|min:0|max:10',
-        'Review' => 'required|string',
-        'titleReview' => 'sometimes|string',
+        'Review' => 'sometimes|string',
+        'titleReview' => 'required|string',
         'dateCreate' => 'required|date'
 
       ]

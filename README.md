@@ -143,9 +143,9 @@ Parameters in `request`
          'IdMovie'      => 'required|numeric',
           'IdUser'      => 'required|numeric',
           'Rating'      => 'required|numeric|min:0|max:10',
-          'Review'      => 'required|string',
-          'titleReview' => 'sometimes|string', 
-          //Nếu trường titleReview null không truyền trường titleReview vào trong Request
+          'Review'      => 'sometimes|string',
+          //Nếu trường Review null không truyền trường Review vào trong Request
+          'titleReview' => 'required|string', 
           'dateCreate'  => 'required|date'
 ```  
 VD: \

@@ -32,7 +32,28 @@ class AuthController extends Controller
     if ($validator->fails()) {
       return response()->json($validator->errors(), 400);
     }
-
+    $user = User::where('email',$request['email'])->first();
+    // return $user;
+    $banExpired = $user['BAN_expired'];
+    $banNum = $user['Banned'];
+    
+    $nowTime = Carbon::now('UTC');
+    if ($nowTime->lessThan($banExpired)) {
+      $hourBan = $nowTime->diffInHours($banExpired);
+      if($hourBan>0){
+        return response()->json(
+        "Xin lỗi! Bạn đã bị ban trong ".$hourBan." giờ.",
+        207
+        );
+      }
+      else{
+        $minuteBan = $nowTime->diffInMinutes($banExpired);
+        return response()->json(
+          "Xin lỗi! Bạn đã bị ban trong ".$minuteBan." phút.",
+          207
+        );
+      }
+    }
     $token_validity = (24 * 60);
 
     $this->guard()->factory()->setTTL($token_validity);

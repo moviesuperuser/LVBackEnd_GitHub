@@ -75,7 +75,7 @@ class ReviewController extends Controller
   {
     $validator = Validator::make(
       $request->all(),
-      [    
+      [
         'Newsletter' => 'required|numeric|min:0|max:1',
       ]
     );
@@ -98,7 +98,8 @@ class ReviewController extends Controller
     $client->send($requestRecombee);
     return "Successful";
   }
-  public function changePasswordUser(Request $request){
+  public function changePasswordUser(Request $request)
+  {
     $validator = Validator::make(
       $request->all(),
       [
@@ -121,15 +122,16 @@ class ReviewController extends Controller
         "Password was changed.",
         200
       );
-    }else{
+    } else {
       return response()->json(
         "Password is incorrect",
         402
       );
     }
   }
-  public function editUser(Request $request){
-    
+  public function editUser(Request $request)
+  {
+
     $user = User::find($request->id);
     $user->name = $request->name;
     $user->email = $request->email;
@@ -158,22 +160,23 @@ class ReviewController extends Controller
   }
   public function showReviews($IdMovie)
   {
-      if (isset($IdMovie)) {
+    if (isset($IdMovie)) {
 
-        $review = array(DB::table('Watches')
-          ->join('users', 'users.id', 'Watches.IdUser')
-          ->where('Watches.IdMovie', $IdMovie)
-          ->where('Watches.Review', '!=', null)
-          ->select('users.id','users.name', 'Watches.Rating','Watches.Review','Watches.created_at','Watches.updated_at','Watches.titleReview')
-          ->get());
-        $review_json = array('Reviews' => $review[0]);
-      } else {
-        $review_json = array();
-      }
-      $result = $this->createJsonResult($review_json);
-      return $result;
+      $review = array(DB::table('Watches')
+        ->join('users', 'users.id', 'Watches.IdUser')
+        ->where('Watches.IdMovie', $IdMovie)
+        ->where('Watches.Review', '!=', null)
+        ->select('users.id', 'users.name', 'Watches.Rating', 'Watches.Review', 'Watches.created_at', 'Watches.updated_at', 'Watches.titleReview')
+        ->get());
+      $review_json = array('Reviews' => $review[0]);
+    } else {
+      $review_json = array();
+    }
+    $result = $this->createJsonResult($review_json);
+    return $result;
   }
-  public function createReview(Request $request){
+  public function createReview(Request $request)
+  {
     $validator = Validator::make(
       $request->all(),
       [
@@ -193,36 +196,51 @@ class ReviewController extends Controller
       );
     }
     $chechReview = DB::table('Watches')
-    ->select('*')
-    ->where('IdMovie',$request['IdMovie'])
-    ->where('IdUser',$request['IdUser'])
-    ->get();
-    if(count($chechReview)==0){
+      ->select('*')
+      ->where('IdMovie', $request['IdMovie'])
+      ->where('IdUser', $request['IdUser'])
+      ->get();
+    if (count($chechReview) == 0) {
       $createReview = DB::table('Watches')
-    ->insert([
-        'IdMovie' => $request['IdMovie'],
-        'IdUser' => $request['IdUser'],
-        'Rating' => $request['Rating'],
-        'Review' => $request['Review'],
-        'titleReview' =>  $request['titleReview'],
-        'created_at' =>  $request['dateCreate'],
-        'updated_at' =>  $request['dateCreate'],
-      ]);
+        ->insert([
+          'IdMovie' => $request['IdMovie'],
+          'IdUser' => $request['IdUser'],
+          'Rating' => $request['Rating'],
+          'Review' => $request['Review'],
+          'titleReview' =>  $request['titleReview'],
+          'created_at' =>  $request['dateCreate'],
+          'updated_at' =>  $request['dateCreate'],
+        ]);
+      DB::update(
+        "update Movies set Movies.Rating= (
+        SELECT  AVG(Rating)  
+                    FROM    Watches 
+                    WHERE   Watches.IdMovie= " . $request['IdMovie'] . "
+        )
+        where Movies.id = " . $request['IdMovie']
+      );
+      return "Successful";
+    } else {
+      $updateReview = DB::table('Watches')
+        ->where('IdMovie', $request['IdMovie'])
+        ->where('IdUser', $request['IdUser'])
+        ->update([
+          'IdMovie' => $request['IdMovie'],
+          'IdUser' => $request['IdUser'],
+          'Rating' => $request['Rating'],
+          'Review' => $request['Review'],
+          'titleReview' =>  $request['titleReview'],
+          'updated_at' =>  $request['dateCreate'],
+        ]);
+      DB::update(
+        "update Movies set Movies.Rating= (
+          SELECT  AVG(Rating)  
+                      FROM    Watches 
+                      WHERE   Watches.IdMovie= " . $request['IdMovie'] . "
+          )
+          where Movies.id = " . $request['IdMovie']
+      );
       return "Successful";
     }
-    else{
-      $updateReview = DB::table('Watches')
-      ->where('IdMovie',$request['IdMovie'])
-      ->where('IdUser',$request['IdUser'])
-    ->update([
-        'IdMovie' => $request['IdMovie'],
-        'IdUser' => $request['IdUser'],
-        'Rating' => $request['Rating'],
-        'Review' => $request['Review'],
-        'titleReview' =>  $request['titleReview'],
-        'updated_at' =>  $request['dateCreate'],
-      ]);
-      return "Successful";
   }
-}
 }
